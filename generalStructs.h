@@ -1,32 +1,32 @@
 #pragma once
+
+#define LW_RS       2
+#define LW_cycles   3 
+#define SW_RS       2
+#define SW_cycles   3 
+#define JMP_RS      2
+#define JMP_cycles  1 
+#define BEQ_RS      2
+#define BEQ_cycles  1
+#define ADD_RS      3
+#define ADD_cycles  2  
+#define NANd_RS     2
+#define NANd_cycles 1
+#define MULT_RS     2
+#define MULT_cycles 10
+
 #include <iostream>
 #include <string>
 using namespace std;
 
 enum state {issue, excute, write, commit}; 
-enum operation {load, store, add, sub, mult, div, nand, addi};
+enum operation {load, store, add, sub, mult, /*div,*/ nand, addi};
 
 struct inst {
 	state instState;
 	operation instType;
 	string rs1, rs2, rd;
 	long signed int imm; 
-};
-
-struct FU_parameters {
-	//1 -> the number of available reservation stations
-	//2 -> the number of cycles needed 
-	int LW[2] = { 2,3 };
-	int SW[2] = { 2,3 };
-	int JMP[2] = { 2,1 };
-	int JALR[2] = { 2,1 };
-	int RET[2] = { 2,1 };
-	int BEQ[2] = { 2,1 };
-	int ADD[2] = { 3,2 };
-	int SUB[2] = { 3,2 };
-	int ADDI[2] = { 3,2 };
-	int NANd[2] = { 2,1 };
-	int MULT[2] = { 2,10 };
 };
 
 struct reservation_station_table {
