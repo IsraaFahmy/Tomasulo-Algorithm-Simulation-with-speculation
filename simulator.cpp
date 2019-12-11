@@ -13,16 +13,17 @@ int regs[8] = { 0 };   //array of registers
 int pc = 0x0;          //location 0x00000000 in the main memory
 int clk = 1;
 int Memory[64 * 1024] = { 0 }; //64 * 1024 bytes * 2 bytes = 128KB, but word addressable so 64 * 1024 is used 
-void RS_TB_initialize(reservation_station_table RS_TB[15]);
-void File_Instructions(vector <string> inst_str);
-void Manual_Instructions(vector <string> inst_str, int inst_count);
+void RS_TB_initializer(reservation_station_table RS_TB[15]);
+void File_Instructions(vector <string> & inst_str);
+void Manual_Instructions(vector <string> & inst_str, int inst_count);
+int reg_To_Num(string & str); 
 
-int main() 
+int main()
 {
 
-	int Mem_Location=0;
+	int Mem_Location = 0;
 	int Mem_Val;
-	int inst_count; 
+	int inst_count;
 	int User_choice;
 
 	//updating the memory 
@@ -39,10 +40,10 @@ int main()
 	cout << " Please choose (0) to read from a file or (1) to enter the instructions manually" << endl;
 	cin >> User_choice;
 
-	
+
 	vector <string> instruction_lines;
 
-	if (User_choice == 1) 
+	if (User_choice == 1)
 	{
 		cout << "Enter number of instrutions: ";
 		cin >> inst_count;
@@ -56,7 +57,7 @@ int main()
 	exit(0);
 }
 
-void RS_TB_initialize(reservation_station_table RS_TB[15])
+void RS_TB_initializer(reservation_station_table RS_TB[15])
 {
 
 	//For load
@@ -102,7 +103,7 @@ void RS_TB_initialize(reservation_station_table RS_TB[15])
 }
 
 // loading instructions from file
-void File_Instructions(vector <string> inst_str)
+void File_Instructions(vector <string> & inst_str)
 {
 	string filename;
 
@@ -110,14 +111,17 @@ void File_Instructions(vector <string> inst_str)
 	cin >> filename;
 
 	ifstream file(filename);
-
+	file.open("test1.txt", ios::out);
 	if (file.is_open())
 	{
 		int i = 0;
 		while (!file.eof())
 		{
-			getline(file, inst_str[i]);
-			i++;
+			
+			string temp;
+			getline(file, temp);
+			inst_str.push_back(temp);
+			cout << "reading done";
 		}
 	}
 	else
@@ -126,15 +130,21 @@ void File_Instructions(vector <string> inst_str)
 }
 
 //Manually enter instructions
-void Manual_Instructions(vector <string> inst_str, int inst_count)
+void Manual_Instructions(vector <string> & inst_str, int inst_count)
 {
 	cout << "Enter the instructions";
 	for (int i = 0; i < inst_count; i++)
 	{
 		cout << "i" << (i + 1) << ": ";
-		getline(cin, inst_str[i]);
+		string temp; 
+		getline(cin, temp);
+		inst_str.push_back(temp);
 	}
 }
+
+
+
+
 //convert source registers into their integer value 
 int reg_To_Num(string & str) {
 	int reg;
@@ -155,4 +165,3 @@ int reg_To_Num(string & str) {
 	else if (str == "R7")
 		return 7;
 }
-
