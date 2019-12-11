@@ -135,4 +135,24 @@ void Manual_Instructions(vector <string> inst_str, int inst_count)
 		getline(cin, inst_str[i]);
 	}
 }
+//convert source registers into their integer value 
+int reg_To_Num(string & str) {
+	int reg;
+	if (str == "R0")
+		return 0;
+	else if (str == "R1")
+		return 1;
+	else if (str == "R2")
+		return 2;
+	else if (str == "R3")
+		return 3;
+	else if (str == "R4")
+		return 4;
+	else if (str == "R5")
+		return 5;
+	else if (str == "R6")
+		return 6;
+	else if (str == "R7")
+		return 7;
+}
 
